@@ -12,12 +12,13 @@ namespace CrudClientes
     {
         Conexao conexao = new Conexao();
         SqlCommand cmd = new SqlCommand();
-        public String mensagem;
-        public Cliente(int Id, String Nome, String Email, String Telefone)
-        {
-            
-        }
 
+        public String mensagem;
+
+        public string Nome {  get; set; }
+        public string Email { get; set; }
+        public string Telefone {  get; set; }
+       
     }
 
 }
