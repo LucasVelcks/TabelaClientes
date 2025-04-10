@@ -14,8 +14,16 @@ namespace CrudClientes
         SqlCommand cmd = new SqlCommand();
 
         public String mensagem;
-
+        public Cliente(string nome, int id, string email, string telefone)
+        {
+            Nome = nome;
+            Id = id;
+            Email = email;
+            Telefone = telefone;
+        }
+        
         public string Nome {  get; set; }
+        public int Id { get; set; }
         public string Email { get; set; }
         public string Telefone {  get; set; }
        

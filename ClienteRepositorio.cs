@@ -6,9 +6,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CrudClientes;
 
 namespace CrudClientes
 {
+    
     public class ClienteRepositorio
     {
         public void InserirCliente(Cliente cliente)
@@ -37,16 +39,41 @@ namespace CrudClientes
                conexao.desconectar();
             }
         }
-        public void ListarCliente(Cliente cliente)
+        public List<Cliente> ListarCliente()
         {
             Conexao conexao = new Conexao();
             SqlCommand select = new SqlCommand();
 
-            List<Cliente> Cliente = new List<Cliente>();
+            List<Cliente> clientes = new List<Cliente>();
+            try
+            {
+                conexao.conectar();
+                string sqlSelect = "SELECT * FROM Clientes";
+                select.CommandText  = sqlSelect; 
+                select.Connection = conexao.conectar();
 
-            conexao.conectar();
-            string sql = "SELECT * FROM Clientes";
+                select.ExecuteReader();
+                SqlDataReader reader = select.ExecuteReader();
 
+                while (reader.Read())
+                {
+                    clientes.Add(new Cliente(
+                        reader["Nome"].ToString(), 
+                        Convert.ToInt32(reader["Id"]), 
+                        reader["Email"].ToString(), 
+                        reader["Telefone"].ToString()
+                        ));
+                }
+                return clientes;
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            finally
+            {
+                conexao.desconectar();
+            }
         }
         public void AtualizarCliente(Cliente cliente)
         {
